@@ -1,0 +1,7 @@
+/**
+ * (c) 2013 Andrew Payne. All rights reserved.
+ */
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+#endif
