@@ -40,7 +40,7 @@ namespace mojito
 		void destroyEntity(Id entityId);
 		/**
 		 * Get an entity by id
-		 * @param id entity id
+		 * @param entityId entity id
 		 * @return the shared pointer to the entity, or NULL if none can be found
 		 */
 		SharedEntity getEntityById(Id entityId) const;

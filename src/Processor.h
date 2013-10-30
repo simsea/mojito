@@ -18,6 +18,11 @@ namespace mojito
 	class Processor : public IMessageHandler
 	{
 	public:
+		/**
+		 * Constructor with filter specification
+		 * @param filter a filter specification that details the subset of Entities that 
+		 * this processor will operate on
+		 */
 		Processor(const Filter& filter);
 		virtual ~Processor();
 		

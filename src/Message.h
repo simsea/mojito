@@ -22,6 +22,7 @@ namespace mojito
 		/**
 		 * Constructor
 		 * @param type the type of the message
+		 * @param entity the shared pointer of the entity that this message relates to
 		 */
 		Message(Label type, SharedEntity entity);
 		~Message();

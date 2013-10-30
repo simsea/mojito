@@ -6,6 +6,9 @@
 
 namespace mojito
 {
+	/**
+	 * Entity Lifecycle
+	 */
 	typedef enum
 	{
 		Lifecycle_Created,

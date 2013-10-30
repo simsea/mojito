@@ -8,9 +8,19 @@
 
 namespace mojito
 {
+	/**
+	 * @brief Entity processor specialization
+	 * @details Processor specialization that processes specific filtered entity lists.
+	 * Child classes of EntityProcessor must implement the process method
+	 */
 	class EntityProcessor : public Processor
 	{
 	public:
+		/**
+		 * Constructor with filter specification
+		 * @param filter a filter specification that details the subset of Entities that 
+		 * this processor will operate on
+		 */
 		EntityProcessor(const Filter& filter);
 		virtual ~EntityProcessor();
 		
