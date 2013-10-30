@@ -37,6 +37,12 @@ namespace mojito
 		 * @param message the message received
 		 */
 		virtual void handleMessage(const Message& message) { }
+		
+		/**
+		 * get the entity manager that this processor is operating within
+		 * @return EntityManager
+		 */
+		EntityManager* getManager() const { return m_manager; }
 
 	private:
 		Filter m_filter;

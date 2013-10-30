@@ -2,7 +2,7 @@
  * (c) 2013 Andrew Payne. All rights reserved.
  */
 #include "Label.h"
-#include "Utility.h"
+#include "Utils.h"
 
 #define USE_STACK_BUFFER
 #define BUFFER_SIZE (512 * 1024)

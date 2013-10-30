@@ -86,7 +86,7 @@
 		6A37BC95182057B4002C46E3 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = src/Property.h; sourceTree = SOURCE_ROOT; };
 		6A37BC96182057B4002C46E3 /* PropertyMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyMap.cpp; path = src/PropertyMap.cpp; sourceTree = SOURCE_ROOT; };
 		6A37BC97182057B4002C46E3 /* PropertyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyMap.h; path = src/PropertyMap.h; sourceTree = SOURCE_ROOT; };
-		6A37BC98182057B4002C46E3 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = src/Utility.h; sourceTree = SOURCE_ROOT; };
+		6A37BC98182057B4002C46E3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = src/Utils.h; sourceTree = SOURCE_ROOT; };
 		6A37BCA5182058EE002C46E3 /* Mojito.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mojito.pch; path = src/Mojito.pch; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -173,7 +173,7 @@
 				6A37BC95182057B4002C46E3 /* Property.h */,
 				6A37BC96182057B4002C46E3 /* PropertyMap.cpp */,
 				6A37BC97182057B4002C46E3 /* PropertyMap.h */,
-				6A37BC98182057B4002C46E3 /* Utility.h */,
+				6A37BC98182057B4002C46E3 /* Utils.h */,
 			);
 			name = src;
 			path = mojito;
@@ -327,7 +327,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -365,7 +364,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -420,7 +418,6 @@
 		6A37BC73182055DA002C46E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -441,7 +438,6 @@
 		6A37BC74182055DA002C46E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

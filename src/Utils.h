@@ -1,8 +1,8 @@
 /**
  * (c) 2013 Andrew Payne. All rights reserved.
  */
-#ifndef _MOJITO_UTILITY_H_
-#define _MOJITO_UTILITY_H_
+#ifndef _MOJITO_UTILS_H_
+#define _MOJITO_UTILS_H_
 
 #include "Platform.h"
 
