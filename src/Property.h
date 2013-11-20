@@ -21,6 +21,7 @@ namespace mojito
 			int intVal;
 			char* strVal;
 			bool boolVal;
+			void* ptrVal;
 		};
 		
 		enum PropertyType
@@ -30,6 +31,7 @@ namespace mojito
 			Type_Integer,
 			Type_String,
 			Type_Boolean,
+			Type_Pointer
 		};
 		
 	public:
@@ -72,6 +74,10 @@ namespace mojito
 		 * @param boolVal boolean value
 		 */
 		Property(bool boolVal);
+		/**
+		 * Constructor
+		 */
+		Property(void* ptrVal);
 		// destructor
 		~Property();
 		
@@ -110,6 +116,11 @@ namespace mojito
 		 * @return Property as a bool
 		 */
 		operator bool () const;
+		/**
+		 * pointer casting operator
+		 * @return Property as Pointer
+		 */
+		operator void* () const;
 		
 		/**
 		 * equality operator
@@ -166,6 +177,12 @@ namespace mojito
 		 * @return this
 		 */
 		Property& operator=(bool boolVal);
+		/**
+		 * assignment operator
+		 * @param ptrVal a pointer value
+		 * @return this
+		 */
+		Property& operator=(void* ptrVal);
 		
 		/** Constant default Property */
 		static const Property Default;

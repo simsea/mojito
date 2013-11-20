@@ -67,6 +67,12 @@ Property::Property(bool boolVal)
 	m_value.boolVal = boolVal;
 }
 
+Property::Property(void* ptrVal)
+: m_type(Type_Pointer)
+{
+	m_value.ptrVal = ptrVal;
+}
+
 Property::~Property()
 {
 	clear();
@@ -90,6 +96,7 @@ bool Property::operator==(const Property& other)
 		case Type_Boolean: return m_value.boolVal == other.m_value.boolVal;
 		case Type_Integer: return m_value.intVal == other.m_value.intVal;
 		case Type_Float: return m_value.floatVal == other.m_value.floatVal;
+		case Type_Pointer: return m_value.ptrVal == other.m_value.ptrVal;
 		case Type_None: return false;
 	}
 	return false;
@@ -105,6 +112,7 @@ bool Property::operator!=(const Property& other)
 		case Type_Boolean: return m_value.boolVal != other.m_value.boolVal;
 		case Type_Integer: return m_value.intVal != other.m_value.intVal;
 		case Type_Float: return m_value.floatVal != other.m_value.floatVal;
+		case Type_Pointer: return m_value.ptrVal != other.m_value.ptrVal;
 		case Type_None: return false;
 	}
 	return false;
@@ -165,6 +173,13 @@ Property::operator bool () const
 	return false;
 }
 
+Property::operator void*() const
+{
+	if (Type_Pointer == m_type)
+		return m_value.ptrVal;
+	return NULL;
+}
+
 Property& Property::operator=(const Property& other)
 {
 	clear();
@@ -187,6 +202,8 @@ Property& Property::operator=(const Property& other)
 	case Type_Boolean:
 		m_value.boolVal = other.m_value.boolVal;
 		break;
+	case Type_Pointer:
+		m_value.ptrVal = other.m_value.ptrVal;
 	case Type_None:
 		break;
 	}
@@ -253,6 +270,14 @@ Property& Property::operator=(bool boolVal)
 	clear();	
 	m_value.boolVal = boolVal;
 	m_type = Type_Boolean;
+	return *this;
+}
+
+Property& Property::operator=(void* ptrVal)
+{
+	clear();
+	m_value.ptrVal = ptrVal;
+	m_type = Type_Pointer;
 	return *this;
 }
 

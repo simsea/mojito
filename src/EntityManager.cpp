@@ -35,11 +35,12 @@ void EntityManager::destroyEntity(Id entityId)
 	auto iter = m_entities.find(entityId);
 	if (m_entities.end() == iter)
 		return;
-	iter->second->m_state = Lifecycle_Destroyed;
-	dispatchMessage(Message(Entity::Destroyed, iter->second));
+	SharedEntity entity = iter->second;
+	entity->m_state = Lifecycle_Destroyed;
+	dispatchMessage(Message(Entity::Destroyed, entity));
 	// remove component mappings
 	for (auto citer = m_componentTypeToEntities.begin(); citer != m_componentTypeToEntities.end(); ++citer)
-		citer->second.erase(iter->second);
+		citer->second.erase(entity);
 	m_entities.erase(iter);
 }
 

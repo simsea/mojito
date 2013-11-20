@@ -68,6 +68,12 @@ namespace mojito
 		 */
 		virtual bool isDerivedFrom(Id typeId) const { return TypeId == typeId; }
 		
+		/**
+		 * get the id of the entity to which this component is attached
+		 * @return entity Id
+		 */
+		Id getEntityId() const { return m_entityId; }
+		
 	private:		
 		Id m_entityId;
 		// intrusive storage

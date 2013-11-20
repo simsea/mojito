@@ -80,6 +80,12 @@ namespace mojito
 		 * @param enabled true for enabled, false for disabled
 		 */
 		void setEnabled(bool enabled);
+		
+		/**
+		 * get the EntityManager that this entity is associated with
+		 * @return EntityManager
+		 */
+		EntityManager* getManager() const { return m_manager; }
 
 	private:
 		Entity();
