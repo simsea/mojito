@@ -74,6 +74,18 @@ namespace mojito
 		 */
 		void removeMessageHandler(IMessageHandler* handler);
 		
+		/**
+		 * Get the number of entities currently in the system
+		 * @return number of entities (acitve and inactive)
+		 */
+		uint32_t getEntityCount() const;
+		
+		/**
+		 * Get the number of active entities currently in the system
+		 * @return active entity count
+		 */
+		uint32_t getActiveEntityCount() const;
+		
 	private:
 		void releaseAll();
 		void registerComponent(Id typeId, Id entityId);

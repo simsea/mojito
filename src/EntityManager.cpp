@@ -204,3 +204,18 @@ void EntityManager::removeMessageHandler(IMessageHandler* handler)
 	m_handlers.erase(iter);
 }
 
+uint32_t EntityManager::getEntityCount() const
+{
+	return m_entities.size();
+}
+
+uint32_t EntityManager::getActiveEntityCount() const
+{
+	uint32_t result = 0;
+	for (auto iter = m_entities.begin(); iter != m_entities.end(); ++iter)
+		if (iter->second->isEnabled())
+			result++;
+	return result;
+}
+
+
