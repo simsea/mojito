@@ -6,7 +6,7 @@
 
 using namespace mojito;
 
-const Id Component::TypeId = crc32("Component");
+const Type Component::TypeId = Type( crc32("Component"), NULL );
 const Label Component::TypeName = Label::FromString("Component");
 
 Component::Component()

@@ -16,6 +16,8 @@
 #include "Processor.h"
 #include "Property.h"
 #include "PropertyMap.h"
+#include "Type.h"
+#include "Utils.h"
 
 #endif
 

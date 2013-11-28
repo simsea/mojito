@@ -38,12 +38,12 @@ void Entity::setEnabled(bool enabled)
 	m_state = enabled ? Lifecycle_Enabled : Lifecycle_Disabled;
 }
 
-void Entity::registerComponent(Id typeId)
+void Entity::registerComponent(const Type& typeId)
 {
 	m_manager->registerComponent(typeId, m_id);
 }
 
-void Entity::unregisterComponent(Id typeId)
+void Entity::unregisterComponent(const Type& typeId)
 {
 	m_manager->unregisterComponent(typeId, m_id);
 }

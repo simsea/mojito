@@ -86,13 +86,19 @@ namespace mojito
 		 */
 		uint32_t getActiveEntityCount() const;
 		
-	private:
+		/**
+		 * release all currently managed entity objects
+		 */
 		void releaseAll();
-		void registerComponent(Id typeId, Id entityId);
-		void unregisterComponent(Id typeId, Id entityId);
+		
+	private:
+		void registerComponent(const Type& typeId, Id entityId);
+		void unregisterComponent(const Type& typeId, Id entityId);
+		
+		void getEntities(const Type& typeId, std::set<SharedEntity>& entities);
 		
 		std::map<Id, SharedEntity> m_entities;
-		std::map<Id, std::set< SharedEntity > > m_componentTypeToEntities;
+		std::map<Type, std::set< SharedEntity > > m_componentTypeToEntities;
 		std::vector< Processor* > m_processors;
 		std::vector< IMessageHandler* > m_handlers;
 		Id m_nextId;

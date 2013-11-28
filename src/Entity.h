@@ -90,8 +90,8 @@ namespace mojito
 	private:
 		Entity();
 
-		void registerComponent(Id typeId);
-		void unregisterComponent(Id typeId);
+		void registerComponent(const Type& typeId);
+		void unregisterComponent(const Type& typeId);
 		
 		Id m_id;
 		EntityManager* m_manager;

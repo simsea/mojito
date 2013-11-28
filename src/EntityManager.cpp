@@ -67,33 +67,38 @@ SharedEntity EntityManager::getEntityById(Id entityId) const
 	return iter->second;
 }
 
+void EntityManager::getEntities(const Type& id, std::set<SharedEntity>& entities)
+{
+	for (auto iter = m_componentTypeToEntities.begin(); iter != m_componentTypeToEntities.end(); ++iter)
+	{
+		if (iter->first.isDerivedFrom(id))
+			entities.insert(iter->second.begin(), iter->second.end());
+	}
+}
+
 std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 {
 	std::set<SharedEntity> entities;
 	if (!filter.getOne().empty())
 	{
 		for (auto& iter : filter.getOne())
-		{
-			auto ents = m_componentTypeToEntities.find(iter);
-			if (m_componentTypeToEntities.end() != ents)
-				entities.insert(ents->second.begin(), ents->second.end());
-		}
+			getEntities(iter, entities);
 	}
 	if (!filter.getAll().empty())
 	{
 		auto iter = filter.getAll().begin();
-		Id typeId = *iter;
-		auto ents = m_componentTypeToEntities.find(typeId);
+		Type typeId = *iter;
 		std::set<SharedEntity> suspects;
-		if (m_componentTypeToEntities.end() != ents)
+		getEntities(typeId, suspects);
+		if (!suspects.empty())
 		{
-			suspects = ents->second;
 			iter++;
 			for (; iter != filter.getAll().end(); ++iter)
 			{
 				typeId = *iter;
-				ents = m_componentTypeToEntities.find(typeId);
-				if (m_componentTypeToEntities.end() == ents)
+				std::set<SharedEntity> ents;
+				getEntities(typeId, ents);
+				if (ents.empty())
 				{
 					suspects.clear();
 					break;
@@ -101,7 +106,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 				std::set<SharedEntity> newSuspects;
 				for (auto& siter : suspects)
 				{
-					if (ents->second.find(siter) != ents->second.end())
+					if (ents.find(siter) != ents.end())
 						newSuspects.insert(siter);
 				}
 				suspects = newSuspects;
@@ -128,9 +133,11 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 		// add all entities that don't have those things in
 		for (auto iter = m_componentTypeToEntities.begin(); iter != m_componentTypeToEntities.end(); ++iter)
 		{
-			if (filter.getExcept().end() != filter.getExcept().find(iter->first))
-				continue;
-			excluded.insert(iter->second.begin(), iter->second.end());
+			for (auto fIter = filter.getExcept().begin(); fIter != filter.getExcept().end(); ++fIter)
+			{
+				if (fIter->isDerivedFrom(iter->first))
+					excluded.insert(iter->second.begin(), iter->second.end());
+			}
 		}
 		if (filter.getAll().empty() && filter.getOne().empty())
 			entities = excluded;
@@ -149,7 +156,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 	return entities;
 }
 
-void EntityManager::registerComponent(Id typeId, Id entityId)
+void EntityManager::registerComponent(const Type& typeId, Id entityId)
 {
 	SharedEntity entity = getEntityById(entityId);
 	if (nullptr == entity)
@@ -158,7 +165,7 @@ void EntityManager::registerComponent(Id typeId, Id entityId)
 	m_componentTypeToEntities[typeId].insert(entity);
 }
 
-void EntityManager::unregisterComponent(Id typeId, Id entityId)
+void EntityManager::unregisterComponent(const Type& typeId, Id entityId)
 {
 	SharedEntity entity = getEntityById(entityId);
 	if (nullptr == entity)

@@ -26,6 +26,7 @@
 		6A37BCA2182057B4002C46E3 /* Processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC92182057B4002C46E3 /* Processor.cpp */; };
 		6A37BCA3182057B4002C46E3 /* Property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC94182057B4002C46E3 /* Property.cpp */; };
 		6A37BCA4182057B4002C46E3 /* PropertyMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC96182057B4002C46E3 /* PropertyMap.cpp */; };
+		6AEA9CF918468657005217EA /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA9CF718468657005217EA /* Type.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		6A37BC97182057B4002C46E3 /* PropertyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyMap.h; path = src/PropertyMap.h; sourceTree = SOURCE_ROOT; };
 		6A37BC98182057B4002C46E3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = src/Utils.h; sourceTree = SOURCE_ROOT; };
 		6A37BCA5182058EE002C46E3 /* Mojito.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mojito.pch; path = src/Mojito.pch; sourceTree = SOURCE_ROOT; };
+		6AEA9CF718468657005217EA /* Type.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Type.cpp; path = src/Type.cpp; sourceTree = SOURCE_ROOT; };
+		6AEA9CF818468657005217EA /* Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.h; path = src/Type.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,8 @@
 				6A37BC95182057B4002C46E3 /* Property.h */,
 				6A37BC96182057B4002C46E3 /* PropertyMap.cpp */,
 				6A37BC97182057B4002C46E3 /* PropertyMap.h */,
+				6AEA9CF718468657005217EA /* Type.cpp */,
+				6AEA9CF818468657005217EA /* Type.h */,
 				6A37BC98182057B4002C46E3 /* Utils.h */,
 			);
 			name = src;
@@ -280,6 +285,7 @@
 			files = (
 				6A37BC9D182057B4002C46E3 /* EntityProcessor.cpp in Sources */,
 				6A37BC9E182057B4002C46E3 /* Filter.cpp in Sources */,
+				6AEA9CF918468657005217EA /* Type.cpp in Sources */,
 				6A37BCA2182057B4002C46E3 /* Processor.cpp in Sources */,
 				6A37BCA3182057B4002C46E3 /* Property.cpp in Sources */,
 				6A37BCA0182057B4002C46E3 /* Log.cpp in Sources */,

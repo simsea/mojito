@@ -13,21 +13,21 @@ Filter::~Filter()
 {
 }
 
-Filter& Filter::all(std::initializer_list<Id> values)
+Filter& Filter::all(std::initializer_list<Type> values)
 {
 	for (auto& value : values)
 		m_all.insert(value);
 	return *this;
 }
 
-Filter& Filter::except(std::initializer_list<Id> values)
+Filter& Filter::except(std::initializer_list<Type> values)
 {
 	for (auto& value : values)
 		m_except.insert(value);
 	return *this;
 }
 
-Filter& Filter::one(std::initializer_list<Id> values)
+Filter& Filter::one(std::initializer_list<Type> values)
 {
 	for (auto& value : values)
 		m_one.insert(value);

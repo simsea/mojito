@@ -8,6 +8,7 @@
 #include "Label.h"
 #include "Lifecycle.h"
 #include "PropertyMap.h"
+#include "Type.h"
 
 namespace mojito
 {
@@ -46,7 +47,7 @@ namespace mojito
 
 		// base-class versions of derived information
 		/** Component class Type id */
-		static const Id TypeId;
+		static const Type TypeId;
 		/** Component class Type name */
 		static const Label TypeName;
 		
@@ -55,7 +56,7 @@ namespace mojito
 		 * Get the type id assocated with the object
 		 * @return class TypeId
 		 */
-		virtual Id getTypeId() const { return TypeId; }
+		virtual const Type& getTypeId() const { return TypeId; }
 		/**
 		 * Get the type name assocated with the object
 		 * @return class TypeName
@@ -66,7 +67,7 @@ namespace mojito
 		 * @param typeId the type id to check against
 		 * @return true if the object is or is derived from the type specified by typeId
 		 */
-		virtual bool isDerivedFrom(Id typeId) const { return TypeId == typeId; }
+		virtual bool isDerivedFrom(const Type& typeId) const { return TypeId == typeId; }
 		
 		/**
 		 * get the id of the entity to which this component is attached
@@ -91,16 +92,16 @@ namespace mojito
 
 #define DECLARE_COMPONENT(Name, Parent) \
 public:\
-static const Id TypeId; \
+static const mojito::Type TypeId; \
 static const mojito::Label TypeName; \
-virtual bool isDerivedFrom(Id typeId) const { \
+virtual bool isDerivedFrom(const mojito::Type& typeId) const { \
 return TypeId == typeId ? true : Parent::isDerivedFrom(typeId); } \
-virtual Id getTypeId() const { return TypeId; } \
+virtual const mojito::Type& getTypeId() const { return TypeId; } \
 virtual mojito::Label getTypeName() const { return TypeName; }
 
 
-#define DEFINE_COMPONENT(Name) \
-const Id Name::TypeId = mojito::crc32(#Name); \
+#define DEFINE_COMPONENT(Name, Parent) \
+const mojito::Type Name::TypeId = mojito::Type( mojito::crc32(#Name), &Parent::TypeId ); \
 const mojito::Label Name::TypeName = mojito::Label::FromString(#Name);
 
 #endif
