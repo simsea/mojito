@@ -55,18 +55,18 @@ namespace mojito
 		 * get the internal case-preserved c-string value
 		 * @return c-string value
 		 */
-		const char* toString() const { return *m_str; }
+		const char* toString() const { return m_ref; }
 		/**
 		 * get the internal case-preserved c-string value
 		 * @return c-string value
 		 */
-		const char* c_str() const { return NULL == m_ref ? NULL : *m_str; }
+		const char* c_str() const { return m_ref; }
 	
 	private:
-		Label(const char* str, void* ref);
+		Label(const char* str, char* ref);
 		
-		std::shared_ptr<char*> m_str;
-		void* m_ref;
+		//std::shared_ptr<char*> m_str;
+		const char* m_ref;
 	};
 
 	/**

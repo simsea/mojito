@@ -94,17 +94,14 @@ Label::Label()
 {
 }
 
-Label::Label(const char* str, void* ref)
+Label::Label(const char* str, char* ref)
 : m_ref(ref)
 {
-	size_t length = strlen(str);
-	m_str = std::make_shared<char*>(new char[length + 1]);
-	memcpy(*m_str, str, length + 1);
+
 }
 
 Label::Label(const Label& other)
-: m_str(other.m_str)
-, m_ref(other.m_ref)
+: m_ref(other.m_ref)
 {
 	
 }
