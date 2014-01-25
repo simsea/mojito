@@ -46,6 +46,7 @@ namespace mojito
 		 */
 		static Label FromString(const std::string& str);
 		
+		Label& operator=(const Label& other);
 		friend bool operator==(const Label& label0, const Label& label1);
 		friend bool operator!=(const Label& label0, const Label& label1);
 		friend bool operator<(const Label& label0, const Label& label1);
@@ -63,10 +64,10 @@ namespace mojito
 		const char* c_str() const { return m_ref; }
 	
 	private:
-		Label(const char* str, char* ref);
+		Label(char* ref);
 		
 		//std::shared_ptr<char*> m_str;
-		const char* m_ref;
+		char* m_ref;
 	};
 
 	/**

@@ -94,7 +94,7 @@ Label::Label()
 {
 }
 
-Label::Label(const char* str, char* ref)
+Label::Label(char* ref)
 : m_ref(ref)
 {
 
@@ -111,12 +111,18 @@ Label::~Label()
 
 }
 
+Label& Label::operator=(const Label& other)
+{
+	m_ref = other.m_ref;
+	return *this;
+}
+
 /*static*/ Label Label::FromString(const char* str)
 {
 	if (NULL == str || 0 == *str)
 		return Label::Null;
 	char* unique = GetPool()->getUniqueString(str);
-	return Label(str, unique);
+	return Label(unique);
 }
 
 /*static*/ Label Label::FromString(const std::string& str)
@@ -124,6 +130,6 @@ Label::~Label()
 	if (str.empty())
 		return Label::Null;
 	char* unique = GetPool()->getUniqueString(str.c_str());
-	return Label(str.c_str(), unique);
+	return Label(unique);
 }
 
