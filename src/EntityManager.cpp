@@ -31,10 +31,10 @@ SharedEntity EntityManager::createEntity()
 
 void EntityManager::destroyEntity(Id entityId)
 {
-	LOG_INFO("Destroying Entity (%u)", entityId);
 	auto iter = m_entities.find(entityId);
 	if (m_entities.end() == iter)
 		return;
+	LOG_INFO("Destroying Entity (%u)", entityId);
 	SharedEntity entity = iter->second;
 	entity->m_state = Lifecycle_Destroyed;
 	dispatchMessage(Message(Entity::Destroyed, entity));
