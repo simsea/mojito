@@ -14,6 +14,8 @@ EntityManager::EntityManager()
 EntityManager::~EntityManager()
 {
 	releaseAll();
+	for (auto iter = m_processors.begin(); iter != m_processors.end(); ++iter)
+		delete *iter;
 }
 
 SharedEntity EntityManager::createEntity()
