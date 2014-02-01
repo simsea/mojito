@@ -41,7 +41,7 @@ namespace mojito
 		 * IMessageHandler messaging interface
 		 * @param message the message received
 		 */
-		virtual void handleMessage(const Message& message) { }
+		virtual void handleMessage(const Message& /*message*/) { }
 		
 		/**
 		 * get the entity manager that this processor is operating within

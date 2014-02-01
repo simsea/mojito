@@ -38,10 +38,15 @@ namespace mojito
 	};
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu"
+
 #define LOG_INFO(msg, ...) mojito::Logger::log(mojito::Logger::Info, msg, ##__VA_ARGS__)
 #define LOG_WARN(msg, ...) mojito::Logger::log(mojito::Logger::Warning, msg, ##__VA_ARGS__)
 #define LOG_ERROR(msg, ...) mojito::Logger::log(mojito::Logger::Error, msg, ##__VA_ARGS__)
 #define LOG_VERBOSE(msg, ...) mojito::Logger::log(mojito::Logger::Verbose, msg, ##__VA_ARGS__)
+
+#pragma clang diagnostic pop
 
 #endif
 
