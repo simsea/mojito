@@ -29,6 +29,14 @@ const Property& PropertyMap::getProperty(const Label& name) const
 	return iter->second;
 }
 
+const Property& PropertyMap::getProperty(const Label& name, const Property& defaultValue) const
+{
+	auto iter = m_properties.find( name );
+	if (m_properties.end() == iter)
+		return defaultValue;
+	return iter->second;
+}
+
 void PropertyMap::removeProperty(const Label& name)
 {
 	auto iter = m_properties.find( name );

@@ -64,6 +64,7 @@ namespace mojito
 		void setProperty(const Label& name, const Property& value);
 		bool hasProperty(const Label& name) const;
 		const Property& getProperty(const Label& name) const;
+		const Property& getProperty(const Label& name, const Property& defaultValue) const;
 		void removeProperty(const Label& name);
 		std::set<Label> getKeys() const;
 
