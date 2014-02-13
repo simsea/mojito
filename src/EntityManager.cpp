@@ -215,7 +215,7 @@ void EntityManager::removeMessageHandler(IMessageHandler* handler)
 
 uint32_t EntityManager::getEntityCount() const
 {
-	return m_entities.size();
+	return (uint32_t) m_entities.size();
 }
 
 uint32_t EntityManager::getActiveEntityCount() const
