@@ -36,7 +36,7 @@ namespace mojito
 		 * @param dt update delta time in seconds
 		 * @param entities a list of entities
 		 */
-		virtual void processEntities(float dt, const std::set<SharedEntity>& entities) = 0;
+		virtual void processEntities(float dt, const std::set<Entity*>& entities) = 0;
 		/**
 		 * IMessageHandler messaging interface
 		 * @param message the message received

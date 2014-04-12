@@ -66,7 +66,6 @@ namespace mojito
 	private:
 		Label(char* ref);
 		
-		//std::shared_ptr<char*> m_str;
 		char* m_ref;
 	};
 
@@ -101,6 +100,12 @@ namespace mojito
 }
 	
 #define LABEL(str) mojito::Label::FromString(#str)
+
+template <>
+struct std::__1::hash<mojito::Label> : public unary_function<mojito::Label, size_t>
+{
+	size_t operator()(mojito::Label __v) const { return std::__1::hash<unsigned int>()( (unsigned int)__v.c_str() ); }
+};
 
 #endif
 

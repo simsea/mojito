@@ -10,19 +10,21 @@ namespace mojito
 {
 	struct Type
 	{
-		Id typeId;
+		uint32_t typeId;
 		const Type* parent;
 		
+		static const Type Null;
+		
 		Type()
+		: typeId(0)
+		, parent(NULL)
 		{
-			typeId = 0;
-			parent = NULL;
 		}
 		
-		Type(Id typeId, const Type* parent)
+		Type(uint32_t typeId, const Type* parent)
+		: typeId(typeId)
+		, parent(parent)
 		{
-			this->typeId = typeId;
-			this->parent = parent;
 		}
 		
 		bool isDerivedFrom(const Type& other) const
@@ -39,11 +41,27 @@ namespace mojito
 			return typeId == other.typeId;
 		}
 		
+		bool operator!=(const Type& other) const
+		{
+			return typeId != other.typeId;
+		}
+		
 		bool operator<(const Type& other) const
 		{
 			return typeId < other.typeId;
 		}
+		
+		bool operator>(const Type& other) const
+		{
+			return typeId > other.typeId;
+		}
 	};
 }
+
+template <>
+struct std::__1::hash<mojito::Type> : public unary_function<mojito::Type, size_t>
+{
+	size_t operator()(mojito::Type __v) const { return static_cast<unsigned int>(__v.typeId); }
+};
 
 #endif

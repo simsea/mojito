@@ -22,9 +22,15 @@ namespace mojito
 		/**
 		 * Constructor
 		 * @param type the type of the message
-		 * @param entity the shared pointer of the entity that this message relates to
+		 * @param entityId the entityId that this message relates to
 		 */
-		Message(Label type, SharedEntity entity);
+		Message(Label type, const EntityId& entityId);
+		/**
+		 * Constructor
+		 * @param type the type of the message
+		 * @param entity the entity that this message relates to
+		 */
+		Message(Label type, Entity* entity);
 		~Message();
 		
 		/**
@@ -38,10 +44,10 @@ namespace mojito
 		 */
 		Message* clone() const;
 		/**
-		 * Get the entity payload
-		 * @return entity
+		 * Get the entity id payload
+		 * @return entity id
 		 */
-		SharedEntity getEntity() const { return m_entity; }
+		EntityId getEntityId() const { return m_entityId; }
 		
 		/**
 		 * In-line parameter set
@@ -55,7 +61,7 @@ namespace mojito
 		Message(const Message&) { }
 		
 		Label m_type;
-		SharedEntity m_entity;
+		EntityId m_entityId;
 	};
 	
 	/**

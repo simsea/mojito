@@ -45,9 +45,9 @@ void PropertyMap::removeProperty(const Label& name)
 	m_properties.erase(iter);
 }
 
-std::set<Label> PropertyMap::getKeys() const
+HashSet<Label> PropertyMap::getKeys() const
 {
-	std::set<Label>	keys;
+	HashSet<Label>	keys;
 	for (auto iter = m_properties.begin(); iter != m_properties.end(); ++iter)
 		keys.insert(iter->first);
 	return keys;

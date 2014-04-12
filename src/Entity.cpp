@@ -21,11 +21,12 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	SharedComponent cur = m_components;
+	Component* cur = m_components;
 	while (nullptr != cur)
 	{
-		SharedComponent next = cur->m_next;
+		Component* next = cur->m_next;
 		cur->m_next = nullptr;
+		delete cur;
 		cur = next;
 	}
 	m_components = nullptr;

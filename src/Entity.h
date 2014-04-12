@@ -6,6 +6,7 @@
 
 #include "Platform.h"
 #include "Component.h"
+#include "EntityId.h"
 #include "Lifecycle.h"
 #include "PropertyMap.h"
 
@@ -38,7 +39,7 @@ namespace mojito
 		 * @tparam T the type of the Component derived class
 		 * @return the newly created Component shared pointer of type T
 		 */
-		template< class T > std::shared_ptr< T > addComponent();
+		template< class T, class ..._Args> T* addComponent(_Args&& ...__args);
 		/**
 		 * Remove a component of a given type from the Entity
 		 * @tparam T the type of the Component derived class
@@ -55,19 +56,19 @@ namespace mojito
 		 * @tparam T the type of the Component derived class
 		 * @return a shared pointer to the Component, or NULL if one does not exist
 		 */
-		template< class T > std::shared_ptr< T > getComponent() const;
+		template< class T > T* getComponent() const;
 		/**
 		 * Get all of the components derived from a given type
 		 * @tparam T the type of the Component derived class
 		 * @return a vector of shared pointers of Component objects that match
 		 */
-		template< class T > std::vector< std::shared_ptr< T > > getComponents() const;
+		template< class T > std::vector< T* > getComponents() const;
 
 		/**
 		 * Get the id of the Entity
 		 * @return id
 		 */
-		Id getId() const { return m_id; }
+		EntityId getId() const { return m_id; }
 		
 		/**
 		 * check if an entity is enabled or not
@@ -93,24 +94,20 @@ namespace mojito
 		void registerComponent(const Type& typeId);
 		void unregisterComponent(const Type& typeId);
 		
-		Id m_id;
+		EntityId m_id;
 		EntityManager* m_manager;
-		SharedComponent m_components;
+		Component* m_components;
 		Lifecycle m_state;
 
 		friend class EntityManager;
 	};
 	
-	/** Shared pointer type for Entity */
-	typedef std::shared_ptr< Entity > SharedEntity;
-
-	template< class T >
-	inline std::shared_ptr<T> Entity::addComponent()
+	template< class T, class ..._Args> inline T* Entity::addComponent(_Args&& ...__args)
 	{
-		std::shared_ptr<T> component = getComponent<T>();
+		T* component = getComponent<T>();
 		if (nullptr == component)
 		{
-			component = std::make_shared<T>(T());
+			component = new T(_VSTD::forward<_Args>(__args)...);
 			component->m_entityId = getId();
 			if (nullptr != m_components)
 				m_components->m_prev = component;
@@ -121,10 +118,9 @@ namespace mojito
 		return component;
 	}
 
-	template< class T >
-	inline void Entity::removeComponent()
+	template< class T > inline void Entity::removeComponent()
 	{
-		SharedComponent cur = m_components;
+		Component* cur = m_components;
 		while (nullptr != cur)
 		{
 			if (cur->isDerivedFrom(T::TypeId))
@@ -134,40 +130,38 @@ namespace mojito
 				else
 					cur->m_prev->m_next = cur->m_next;
 				unregisterComponent(T::TypeId);
+				delete cur;
 				break;
 			}
 			cur = cur->m_next;
 		}
 	}
 
-	template< class T > 
-	inline bool Entity::hasComponent() const
+	template< class T >  inline bool Entity::hasComponent() const
 	{
 		return nullptr != getComponent<T>();				
 	}
 
-	template< class T>
-	inline std::shared_ptr<T> Entity::getComponent() const
+	template< class T> inline T* Entity::getComponent() const
 	{	
-		SharedComponent cur = m_components;
+		Component* cur = m_components;
 		while (nullptr != cur)
 		{
 			if (cur->isDerivedFrom(T::TypeId))
-				return std::static_pointer_cast<T>(cur);
+				return static_cast<T*>(cur);
 			cur = cur->m_next;
 		}
 		return nullptr;
 	}
 
-	template< class T > 
-	inline std::vector< std::shared_ptr<T> > Entity::getComponents() const
+	template< class T > inline std::vector< T* > Entity::getComponents() const
 	{
 		std::vector<T*> entities;
-		SharedComponent cur = m_components;
+		Component* cur = m_components;
 		while (nullptr != cur)
 		{
 			if (cur->isDerivedFrom(T::TypeId))
-				entities.push_back( std::static_pointer_cast< T >(cur) );
+				entities.push_back( static_cast< T* >(cur) );
 			cur = cur->m_next;
 		}
 		return entities;

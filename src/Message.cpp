@@ -5,9 +5,15 @@
 
 using namespace mojito;
 
-Message::Message(Label type, SharedEntity entity)
+Message::Message(Label type, const EntityId& entityId)
 : m_type(type)
-, m_entity(entity)
+, m_entityId(entityId)
+{
+}
+
+Message::Message(Label type, Entity* entity)
+: m_type(type)
+, m_entityId(nullptr == entity ? 0 : entity->getId())
 {
 }
 
@@ -17,7 +23,7 @@ Message::~Message()
 
 Message* Message::clone() const
 {
-	return new Message(m_type, m_entity);
+	return new Message(m_type, m_entityId);
 }
 
 Message& Message::set(Label key, const Property& value)

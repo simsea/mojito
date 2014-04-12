@@ -26,6 +26,7 @@
 		6A37BCA2182057B4002C46E3 /* Processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC92182057B4002C46E3 /* Processor.cpp */; };
 		6A37BCA3182057B4002C46E3 /* Property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC94182057B4002C46E3 /* Property.cpp */; };
 		6A37BCA4182057B4002C46E3 /* PropertyMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC96182057B4002C46E3 /* PropertyMap.cpp */; };
+		6A70F37E18F910CF005E984A /* EntityId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A70F37D18F910CF005E984A /* EntityId.cpp */; };
 		6AEA9CF918468657005217EA /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA9CF718468657005217EA /* Type.cpp */; };
 		C3B6210C188F545900281F30 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC7D182057B4002C46E3 /* Component.cpp */; };
 		C3B6210D188F545900281F30 /* Crc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6A37BC7F182057B4002C46E3 /* Crc.cpp */; };
@@ -102,6 +103,8 @@
 		6A37BC97182057B4002C46E3 /* PropertyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyMap.h; path = src/PropertyMap.h; sourceTree = SOURCE_ROOT; };
 		6A37BC98182057B4002C46E3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = src/Utils.h; sourceTree = SOURCE_ROOT; };
 		6A37BCA5182058EE002C46E3 /* Mojito.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mojito.pch; path = src/Mojito.pch; sourceTree = SOURCE_ROOT; };
+		6A41498A18F8E4F6006249B9 /* EntityId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityId.h; path = src/EntityId.h; sourceTree = SOURCE_ROOT; };
+		6A70F37D18F910CF005E984A /* EntityId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntityId.cpp; path = src/EntityId.cpp; sourceTree = SOURCE_ROOT; };
 		6AEA9CF718468657005217EA /* Type.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Type.cpp; path = src/Type.cpp; sourceTree = SOURCE_ROOT; };
 		6AEA9CF818468657005217EA /* Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.h; path = src/Type.h; sourceTree = SOURCE_ROOT; };
 		C3B62108188F544400281F30 /* libmojito Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmojito Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +179,8 @@
 				6A37BC80182057B4002C46E3 /* Crc.h */,
 				6A37BC81182057B4002C46E3 /* Entity.cpp */,
 				6A37BC82182057B4002C46E3 /* Entity.h */,
+				6A70F37D18F910CF005E984A /* EntityId.cpp */,
+				6A41498A18F8E4F6006249B9 /* EntityId.h */,
 				6A37BC83182057B4002C46E3 /* EntityManager.cpp */,
 				6A37BC84182057B4002C46E3 /* EntityManager.h */,
 				6A37BC85182057B4002C46E3 /* EntityProcessor.cpp */,
@@ -346,6 +351,7 @@
 				6A37BC99182057B4002C46E3 /* Component.cpp in Sources */,
 				6A37BC9F182057B4002C46E3 /* Label.cpp in Sources */,
 				6A37BCA1182057B4002C46E3 /* Message.cpp in Sources */,
+				6A70F37E18F910CF005E984A /* EntityId.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

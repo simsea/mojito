@@ -49,7 +49,7 @@ namespace mojito
 		 * get the keys set in the property map
 		 * @return set of keys
 		 */
-		virtual std::set<Label> getKeys() const = 0;
+		virtual HashSet<Label> getKeys() const = 0;
 	};
 	
 	// -------------------------------------------------------------------------
@@ -66,10 +66,10 @@ namespace mojito
 		const Property& getProperty(const Label& name) const;
 		const Property& getProperty(const Label& name, const Property& defaultValue) const;
 		void removeProperty(const Label& name);
-		std::set<Label> getKeys() const;
+		HashSet<Label> getKeys() const;
 
 	private:
-		std::map< Label, Property > m_properties;
+		HashMap< Label, Property > m_properties;
 	};
 }
 

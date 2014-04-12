@@ -21,7 +21,7 @@ void Processor::process(float dt)
 	if (NULL == m_manager)
 		return;
 	// find the entities that this processor is interested in
-	std::set<SharedEntity> entities = m_manager->getEntities(m_filter);
+	std::set<Entity*> entities = m_manager->getEntities(m_filter);
 	processEntities(dt, entities);
 }
 

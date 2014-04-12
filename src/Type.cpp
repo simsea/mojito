@@ -7,3 +7,7 @@
 //
 
 #include "Type.h"
+
+using namespace mojito;
+
+const Type Type::Null = Type();

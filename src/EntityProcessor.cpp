@@ -14,7 +14,7 @@ EntityProcessor::~EntityProcessor()
 {
 }
 
-void EntityProcessor::processEntities(float dt, const std::set<SharedEntity>& entities)
+void EntityProcessor::processEntities(float dt, const std::set<Entity*>& entities)
 {
 	for (auto iter = entities.begin(); iter != entities.end(); ++iter)
 		processEntity(dt, *iter);

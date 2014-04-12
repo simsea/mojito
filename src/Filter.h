@@ -47,22 +47,22 @@ namespace mojito
 		 * get the set of "All" conditions
 		 * @return the set of "All" conditions
 		 */
-		const std::set<Type>& getAll() const { return m_all; }
+		const HashSet<Type>& getAll() const { return m_all; }
 		/**
 		 * get the set of "Except" conditions
 		 * @return the set of "Except" conditions
 		 */
-		const std::set<Type>& getExcept() const { return m_except; }
+		const HashSet<Type>& getExcept() const { return m_except; }
 		/**
 		 * get the set of "One Of" conditions
 		 * @return the set of "One Of" conditions
 		 */
-		const std::set<Type>& getOne() const { return m_one; }
+		const HashSet<Type>& getOne() const { return m_one; }
 		
 	private:
-		std::set<Type> m_all;
-		std::set<Type> m_except;
-		std::set<Type> m_one;
+		HashSet<Type> m_all;
+		HashSet<Type> m_except;
+		HashSet<Type> m_one;
 	};
 }
 

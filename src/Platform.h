@@ -16,11 +16,13 @@
 #include <string>
 #include <string.h>
 #include <vector>
-#include <memory>
+
+#include <unordered_map>
+#include <unordered_set>
+
+#define HashMap std::unordered_map
+#define HashSet std::unordered_set
 
 #define EPSILON (0.0001f)
-
-/** Id type */
-typedef uint32_t Id;
 
 #endif

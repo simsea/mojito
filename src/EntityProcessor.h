@@ -29,8 +29,8 @@ namespace mojito
 		 * @param dt update delta time in seconds
 		 * @param entity the entity
 		 */
-		virtual void processEntity(float dt, SharedEntity entity) = 0;
-		void processEntities(float dt, const std::set<SharedEntity>& entities);
+		virtual void processEntity(float dt, Entity* entity) = 0;
+		void processEntities(float dt, const std::set<Entity*>& entities);
 		
 	private:
 		

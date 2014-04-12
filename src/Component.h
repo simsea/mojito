@@ -5,6 +5,7 @@
 #define _MOJITO_COMPONENT_H_
 
 #include "Crc.h"
+#include "EntityId.h"
 #include "Label.h"
 #include "Lifecycle.h"
 #include "PropertyMap.h"
@@ -32,11 +33,6 @@ namespace mojito
 	 * DEFINE_COMPONENT(MyComponent)
 	 * ...
 	 * @endcode
-	 * It is also suggested that, for convenience, sub classes also typedef 
-	 * their own std::shared_ptr type in their header file.
-	 * @code{.cpp}
-	 * typedef std::shared_ptr<MyComponent> SharedMyComponent;
-	 * @endcode
 	 */
 	class Component
 	{
@@ -58,6 +54,11 @@ namespace mojito
 		 */
 		virtual const Type& getTypeId() const { return TypeId; }
 		/**
+		 * Get the parent type id
+		 * @return class TypeId
+		 */
+		static const Type& getParentTypeId() { return Type::Null; }
+		/**
 		 * Get the type name assocated with the object
 		 * @return class TypeName
 		 */
@@ -73,21 +74,16 @@ namespace mojito
 		 * get the id of the entity to which this component is attached
 		 * @return entity Id
 		 */
-		Id getEntityId() const { return m_entityId; }
+		const EntityId& getEntityId() const { return m_entityId; }
 		
 	private:		
-		Id m_entityId;
+		EntityId m_entityId;
 		// intrusive storage
-		std::shared_ptr<Component> m_prev;
-		std::shared_ptr<Component> m_next;
+		Component* m_prev;
+		Component* m_next;
 
 		friend class Entity;
 	};
-	
-	/**
-	 * Shared pointer for Component
-	 */
-	typedef std::shared_ptr< Component > SharedComponent;
 }
 
 #define DECLARE_COMPONENT(Name, Parent) \
@@ -97,11 +93,14 @@ static const mojito::Label TypeName; \
 virtual bool isDerivedFrom(const mojito::Type& typeId) const { \
 return TypeId == typeId ? true : Parent::isDerivedFrom(typeId); } \
 virtual const mojito::Type& getTypeId() const { return TypeId; } \
-virtual mojito::Label getTypeName() const { return TypeName; }
+virtual mojito::Label getTypeName() const { return TypeName; } \
+private: \
+static const mojito::Type& getParentTypeId() { return Parent::TypeId; } \
+public:
 
 
-#define DEFINE_COMPONENT(Name, Parent) \
-const mojito::Type Name::TypeId = mojito::Type( mojito::crc32(#Name), &Parent::TypeId ); \
+#define DEFINE_COMPONENT(Name) \
+const mojito::Type Name::TypeId = mojito::Type( mojito::crc32(#Name), &getParentTypeId() ); \
 const mojito::Label Name::TypeName = mojito::Label::FromString(#Name);
 
 #endif

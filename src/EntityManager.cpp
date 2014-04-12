@@ -14,15 +14,17 @@ EntityManager::EntityManager()
 EntityManager::~EntityManager()
 {
 	releaseAll();
+	for (auto iter = m_entitiesToDestroy.begin(); iter != m_entitiesToDestroy.end(); ++iter)
+		delete *iter;
 	for (auto iter = m_processors.begin(); iter != m_processors.end(); ++iter)
 		delete *iter;
 }
 
-SharedEntity EntityManager::createEntity()
+Entity* EntityManager::createEntity()
 {
-	Id entityId = ++m_nextId;
-	LOG_INFO("Creating Entity (%u)", entityId);
-	SharedEntity entity = std::make_shared<Entity>(Entity());
+	EntityId entityId = ++m_nextId;
+	LOG_INFO("Creating Entity (%u)", entityId.id);
+	Entity* entity = new Entity();
 	entity->m_id = entityId;
 	entity->m_manager = this;
 	entity->m_state = Lifecycle_Enabled;
@@ -31,23 +33,28 @@ SharedEntity EntityManager::createEntity()
 	return entity;
 }
 
-void EntityManager::destroyEntity(Id entityId)
+void EntityManager::destroyEntity(const EntityId& entityId)
 {
 	auto iter = m_entities.find(entityId);
 	if (m_entities.end() == iter)
 		return;
-	LOG_INFO("Destroying Entity (%u)", entityId);
-	SharedEntity entity = iter->second;
+	LOG_INFO("Destroying Entity (%u)", entityId.id);
+	Entity* entity = iter->second;
 	entity->m_state = Lifecycle_Destroyed;
 	dispatchMessage(Message(Entity::Destroyed, entity));
 	// remove component mappings
 	for (auto citer = m_componentTypeToEntities.begin(); citer != m_componentTypeToEntities.end(); ++citer)
 		citer->second.erase(entity);
 	m_entities.erase(iter);
+	m_entitiesToDestroy.push_back( entity );
 }
 
 void EntityManager::update(float dt)
 {
+	for (auto iter = m_entitiesToDestroy.begin(); iter != m_entitiesToDestroy.end(); ++iter)
+		delete *iter;
+	m_entitiesToDestroy.clear();
+	
 	for (auto iter = m_processors.begin(); iter != m_processors.end(); ++iter)
 		(*iter)->process(dt);
 }
@@ -55,13 +62,16 @@ void EntityManager::update(float dt)
 void EntityManager::releaseAll()
 {
 	for (auto iter = m_entities.begin(); iter != m_entities.end(); ++iter)
+	{
 		dispatchMessage(Message(Entity::Destroyed, iter->second));
+		m_entitiesToDestroy.push_back(iter->second);
+	}
 	// clear lists
 	m_entities.clear();
 	m_componentTypeToEntities.clear();
 }
 
-SharedEntity EntityManager::getEntityById(Id entityId) const
+Entity* EntityManager::getEntityById(const EntityId& entityId) const
 {
 	auto iter = m_entities.find(entityId);
 	if (m_entities.end() == iter)
@@ -69,7 +79,7 @@ SharedEntity EntityManager::getEntityById(Id entityId) const
 	return iter->second;
 }
 
-void EntityManager::getEntities(const Type& id, std::set<SharedEntity>& entities)
+void EntityManager::getEntities(const Type& id, std::set<Entity*>& entities)
 {
 	for (auto iter = m_componentTypeToEntities.begin(); iter != m_componentTypeToEntities.end(); ++iter)
 	{
@@ -78,9 +88,9 @@ void EntityManager::getEntities(const Type& id, std::set<SharedEntity>& entities
 	}
 }
 
-std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
+std::set<Entity*> EntityManager::getEntities(const Filter& filter)
 {
-	std::set<SharedEntity> entities;
+	std::set<Entity*> entities;
 	if (!filter.getOne().empty())
 	{
 		for (auto& iter : filter.getOne())
@@ -90,7 +100,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 	{
 		auto iter = filter.getAll().begin();
 		Type typeId = *iter;
-		std::set<SharedEntity> suspects;
+		std::set<Entity*> suspects;
 		getEntities(typeId, suspects);
 		if (!suspects.empty())
 		{
@@ -98,14 +108,14 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 			for (; iter != filter.getAll().end(); ++iter)
 			{
 				typeId = *iter;
-				std::set<SharedEntity> ents;
+				std::set<Entity*> ents;
 				getEntities(typeId, ents);
 				if (ents.empty())
 				{
 					suspects.clear();
 					break;
 				}
-				std::set<SharedEntity> newSuspects;
+				std::set<Entity*> newSuspects;
 				for (auto& siter : suspects)
 				{
 					if (ents.find(siter) != ents.end())
@@ -119,7 +129,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 			entities = suspects;
 		else
 		{
-			std::set<SharedEntity> newEntities;
+			std::set<Entity*> newEntities;
 			// otherwise, we have to check that the entity exists in both sets
 			for (auto iter = entities.begin(); iter != entities.end(); ++iter)
 			{
@@ -131,7 +141,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 	}
 	if (!filter.getExcept().empty())
 	{
-		std::set<SharedEntity> excluded;
+		std::set<Entity*> excluded;
 		// add all entities that don't have those things in
 		for (auto iter = m_componentTypeToEntities.begin(); iter != m_componentTypeToEntities.end(); ++iter)
 		{
@@ -145,7 +155,7 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 			entities = excluded;
 		else
 		{
-			std::set<SharedEntity> newEntities;
+			std::set<Entity*> newEntities;
 			// otherwise, we have to check that the entity exists in both sets
 			for (auto iter = entities.begin(); iter != entities.end(); ++iter)
 			{
@@ -158,18 +168,18 @@ std::set<SharedEntity> EntityManager::getEntities(const Filter& filter)
 	return entities;
 }
 
-void EntityManager::registerComponent(const Type& typeId, Id entityId)
+void EntityManager::registerComponent(const Type& typeId, const EntityId& entityId)
 {
-	SharedEntity entity = getEntityById(entityId);
+	Entity* entity = getEntityById(entityId);
 	if (nullptr == entity)
 		return;
 	//LOG_INFO("registering component type %u for entity %u", typeId, entityId);
 	m_componentTypeToEntities[typeId].insert(entity);
 }
 
-void EntityManager::unregisterComponent(const Type& typeId, Id entityId)
+void EntityManager::unregisterComponent(const Type& typeId, const EntityId& entityId)
 {
-	SharedEntity entity = getEntityById(entityId);
+	Entity* entity = getEntityById(entityId);
 	if (nullptr == entity)
 		return;
 	auto iter = m_componentTypeToEntities.find(typeId);

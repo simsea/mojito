@@ -32,23 +32,23 @@ namespace mojito
 		 * Create an entity in the EntityManager
 		 * @return the shared pointer to the entity
 		 */
-		SharedEntity createEntity();
+		Entity* createEntity();
 		/**
 		 * Destroy an entity
 		 * @param entityId the id of the entity to destroy
 		 */
-		void destroyEntity(Id entityId);
+		void destroyEntity(const EntityId& entityId);
 		/**
 		 * Get an entity by id
 		 * @param entityId entity id
 		 * @return the shared pointer to the entity, or NULL if none can be found
 		 */
-		SharedEntity getEntityById(Id entityId) const;
+		Entity* getEntityById(const EntityId& entityId) const;
 		/**
 		 * Get entities using an entity type filter
 		 * @param filter the filter
 		 */
-		std::set<SharedEntity> getEntities(const Filter& filter);
+		std::set<Entity*> getEntities(const Filter& filter);
 
 		/**
 		 * Add a processor.
@@ -92,16 +92,17 @@ namespace mojito
 		void releaseAll();
 		
 	private:
-		void registerComponent(const Type& typeId, Id entityId);
-		void unregisterComponent(const Type& typeId, Id entityId);
+		void registerComponent(const Type& typeId, const EntityId& entityId);
+		void unregisterComponent(const Type& typeId, const EntityId& entityId);
 		
-		void getEntities(const Type& typeId, std::set<SharedEntity>& entities);
+		void getEntities(const Type& typeId, std::set<Entity*>& entities);
 		
-		std::map<Id, SharedEntity> m_entities;
-		std::map<Type, std::set< SharedEntity > > m_componentTypeToEntities;
+		HashMap<EntityId, Entity*> m_entities;
+		HashMap<Type, HashSet< Entity* > > m_componentTypeToEntities;
 		std::vector< Processor* > m_processors;
 		std::vector< IMessageHandler* > m_handlers;
-		Id m_nextId;
+		std::vector< Entity* > m_entitiesToDestroy;
+		uint32_t m_nextId;
 		
 		friend class Entity;
 	};
