@@ -20,7 +20,7 @@ namespace mojito
 	{
 	public:
 		EntityManager();
-		~EntityManager();
+		virtual ~EntityManager();
 
 		/**
 		 * update the entity manager
