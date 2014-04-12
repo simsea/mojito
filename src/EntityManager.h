@@ -30,7 +30,7 @@ namespace mojito
 		
 		/**
 		 * Create an entity in the EntityManager
-		 * @return the shared pointer to the entity
+		 * @return the pointer to the new entity
 		 */
 		Entity* createEntity();
 		/**
@@ -54,8 +54,8 @@ namespace mojito
 		 * Add a processor.
 		 * @param processor the processor to add
 		 */
-		void addProcessor(Processor* processor);
-
+		template< class T, class ..._Args> T* addProcessor(_Args&& ...__args);
+		
 		/**
 		 * IMessageDispatcher message interface
 		 * @param message the message to dispatch
@@ -106,6 +106,14 @@ namespace mojito
 		
 		friend class Entity;
 	};
+	
+	template< class T, class ..._Args> inline T* EntityManager::addProcessor(_Args&& ...__args)
+	{
+		Processor* processor = new T(_VSTD::forward<_Args>(__args)...);
+		processor->m_manager = this;
+		m_processors.push_back(processor);
+		return static_cast<T*>(processor);
+	}
 }
 
 #endif

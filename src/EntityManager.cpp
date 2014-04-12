@@ -188,16 +188,6 @@ void EntityManager::unregisterComponent(const Type& typeId, const EntityId& enti
 	iter->second.erase(entity);
 }
 
-void EntityManager::addProcessor(Processor* processor)
-{
-	if (NULL == processor || NULL != processor->m_manager)
-		return;
-	if (m_processors.end() != std::find(m_processors.begin(), m_processors.end(), processor))
-		return;
-	processor->m_manager = this;
-	m_processors.push_back(processor);
-}
-
 void EntityManager::dispatchMessage(const Message& message)
 {
 	for (auto iter = m_handlers.begin(); iter != m_handlers.end(); ++iter)
